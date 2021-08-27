@@ -18,12 +18,10 @@ const userSchema = new mongoose.Schema({
     },
     img: {
         type: String,
-        required: false,
         default: "uploads/users/avatar/default.png"
     },
     isAdmin: {
         type: Boolean,
-        required: false,
         default: false
     },
     verify_code: {
@@ -32,7 +30,6 @@ const userSchema = new mongoose.Schema({
     },
     email_verified_at: {
         type: Date,
-        required: false
     }
 })
 
