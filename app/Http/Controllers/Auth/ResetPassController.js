@@ -57,7 +57,7 @@ class ResetPassController
         try {
 
             // Make sure this pincode is valid
-            let resetpassRow = await ResetPassword.findOne({
+            const resetpassRow = await ResetPassword.findOne({
                 pincode: req.body.pincode
             })
 
@@ -98,8 +98,7 @@ class ResetPassController
             const password = await bcrypt.hash(req.body.newPassword, 10)
 
             // Change password  
-            await User.updateOne(
-            { email}, {$set: { password }})
+            await User.updateOne({ email}, {$set: { password }})
 
             // Inject Observer 
             ResetPassObserver.resetPassword({email})

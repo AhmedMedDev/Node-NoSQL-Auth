@@ -1,15 +1,15 @@
 const { body } = require('express-validator');
 
-class PreRePaRequest
+class CreatePincode
 {
     static roles () {
         return [
             // email roles
             body('email')
             .isEmail()
-            .withMessage('must be an email'),
+            .withMessage('Must be an email'),
         ]
     }
 }
 
-module.exports = PreRePaRequest.roles()
+module.exports = CreatePincode.roles()

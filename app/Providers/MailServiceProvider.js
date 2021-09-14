@@ -17,7 +17,7 @@ class MailServiceProvider {
         data['from'] = `"Fred Foo 👻" <${process.env.MAIL_FROM_ADDRESS}>`;
 
         let response = await transporter.sendMail(data);
-        
+        console.log(response);
     }
 
 }

@@ -1,13 +1,13 @@
 const ConfirmPinRequest = require("./confirmPinRequest")
 const LoginRequest      = require("./LoginRequest")
-const PreRePaRequest    = require("./PreRePaRequest")
+const CreatePincode    = require("./CreatePincode")
 const RegisterRequest   = require("./RegisterRequest")
 const ResetPassRequest  = require("./ResetPassRequest")
 
 module.exports = {
     ConfirmPinRequest,
     LoginRequest,
-    PreRePaRequest,
+    CreatePincode,
     RegisterRequest,
     ResetPassRequest
 }
