@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "8fe49e45-eacf-463c-8eb8-6f00a1317ab2",
-		"name": "Node-Auth-API",
+		"_postman_id": "791ba4cf-29c1-4a80-945c-dce1c91c425f",
+		"name": "Authentication System",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -9,7 +9,7 @@
 			"name": "Reset Password",
 			"item": [
 				{
-					"name": "preResetPassword",
+					"name": "createPincode",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -24,7 +24,7 @@
 							"urlencoded": [
 								{
 									"key": "email",
-									"value": "aaaaa.as@gmail.com",
+									"value": "said@said.com",
 									"type": "text"
 								},
 								{
@@ -36,7 +36,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/auth/preResetPassword",
+							"raw": "http://127.0.0.1:8000/api/v1/auth/createPincode",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -49,7 +49,7 @@
 								"api",
 								"v1",
 								"auth",
-								"preResetPassword"
+								"createPincode"
 							]
 						}
 					},
@@ -71,7 +71,7 @@
 							"formdata": [
 								{
 									"key": "pincode",
-									"value": "525708",
+									"value": "810144",
 									"type": "text"
 								},
 								{
@@ -118,17 +118,17 @@
 							"urlencoded": [
 								{
 									"key": "pincode",
-									"value": "608683",
+									"value": "334898",
 									"type": "text"
 								},
 								{
 									"key": "newPassword",
-									"value": "password",
+									"value": "passworda",
 									"type": "text"
 								},
 								{
 									"key": "password_confirmation",
-									"value": "password",
+									"value": "passworda",
 									"type": "text"
 								}
 							]
@@ -167,16 +167,16 @@
 					}
 				],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
+					"mode": "formdata",
+					"formdata": [
 						{
 							"key": "name",
-							"value": "Ahmed Said",
+							"value": "Ahmed said",
 							"type": "text"
 						},
 						{
 							"key": "email",
-							"value": "ahmed@ahmed.comaa",
+							"value": "said@said.com",
 							"type": "text"
 						},
 						{
@@ -190,10 +190,9 @@
 							"type": "text"
 						},
 						{
-							"key": "img",
-							"value": "",
-							"type": "text",
-							"disabled": true
+							"key": "avatar",
+							"type": "file",
+							"src": "/G:/testing-images/submarine.png"
 						}
 					]
 				},
@@ -229,7 +228,13 @@
 					"urlencoded": [
 						{
 							"key": "email",
-							"value": "ahmed@ahmed.com",
+							"value": "admin@admin.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "said@said.com",
 							"type": "text"
 						},
 						{
@@ -268,7 +273,7 @@
 			"response": []
 		},
 		{
-			"name": "emailVerification",
+			"name": "Email Verification",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -303,7 +308,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2MTI3YWE2YThiYjIzY2U3NGYzMzQ0YTAifSwiaWF0IjoxNjI5OTkyNjk5LCJleHAiOjE2Mjk5OTYyOTl9.m396g5y_nW-lOe_z4PdWjlKwjXXtmp6aPazHMW0rn70",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2MTQwMDAxMjZkMDhhMzlmNjc2ZDUyNmEifSwiaWF0IjoxNjMxNTkwNjIxLCJleHAiOjE2MzE1OTQyMjF9.AD346z7rXkUZiLwM_cH6jMInKIzELKnIY9WEIH18nS8",
 							"type": "string"
 						}
 					]
@@ -334,7 +339,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2MTI3YWE2YThiYjIzY2U3NGYzMzQ0YTAifSwiaWF0IjoxNjI5OTkyNjk5LCJleHAiOjE2Mjk5OTYyOTl9.m396g5y_nW-lOe_z4PdWjlKwjXXtmp6aPazHMW0rn70",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InVzZXJfaWQiOiI2MTQwMDAxMjZkMDhhMzlmNjc2ZDUyNmEifSwiaWF0IjoxNjMxNTg2NDE0LCJleHAiOjE2MzE1OTAwMTR9.xtrxy4nQJwz0iitd7mDal6evyjNuOIpJQBDXQdQrG2k",
 							"type": "string"
 						}
 					]
