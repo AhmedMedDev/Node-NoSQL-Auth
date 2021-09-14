@@ -14,29 +14,26 @@ class ResetPassController
      * @param {*} res 
      * @returns 
      */
-    async preResetPassword (req, res)  
+    async createPincode (req, res)  
     {
         try {
             
             // Make sure this email is valid
-            let user = await User.find({
+            const user = await User.findOne({
                 email: req.body.email
             }) 
 
-            if (!user[0])
-                return ResponseServiceProvider.notFoundResource(res)
-    
+            // Get Email
+            const email = user.email
+
             // Create Pincode 
-            let pincode = Math.floor(Math.random() * 999999) + 100000;
+            const pincode = Math.floor(Math.random() * 999999) + 100000;
     
             // Store pincode 
-            ResetPassword.create({
-                email: user[0].email,
-                pincode
-            })
+            ResetPassword.create({email, pincode})
 
             // Inject Observer 
-            ResetPassObserver.preResetPassword({user, pincode})
+            ResetPassObserver.createPincode({user, pincode})
 
             return res.status(200).json({
                 success : true,
@@ -44,7 +41,7 @@ class ResetPassController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider.unauthenticated(res)
         }
     }
 
@@ -60,17 +57,16 @@ class ResetPassController
         try {
 
             // Make sure this pincode is valid
-            let resetpassRow = await ResetPassword.find({
+            let resetpassRow = await ResetPassword.findOne({
                 pincode: req.body.pincode
             })
 
-            if (!resetpassRow[0]) 
-                return ResponseServiceProvider.notFoundResource(res)
-
-            return res.status(200).json({
+            return (resetpassRow)
+            ? res.status(200).json({
                 success : true,
                 payload : "Proceed to the next process"
-            })
+             })
+            : ResponseServiceProvider.unauthenticated(res)
 
         } catch (error) {
             return ResponseServiceProvider.serverError(res, error)
@@ -91,31 +87,27 @@ class ResetPassController
         try {
 
             // Make sure this pincode is valid
-            let resetpassRow = await ResetPassword.find({
+            let resetpassRow = await ResetPassword.findOne({
                 pincode: req.body.pincode
             })
 
-            if (!resetpassRow[0]) 
-                return ResponseServiceProvider.notFoundResource(res)
-
+            // GEt Email
+            const email = resetpassRow.email
 
             // Hash Password
             const password = await bcrypt.hash(req.body.newPassword, 10)
 
             // Change password  
             await User.updateOne(
-                { email: resetpassRow[0].email},
-                { $set: { password }})
+            { email}, {$set: { password }})
 
             // Inject Observer 
-            ResetPassObserver.resetPassword({
-                email: resetpassRow[0].email
-            })
+            ResetPassObserver.resetPassword({email})
 
-            return res.status(200).json({success : true})
+            return res.status(200).json({success: true})
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider.unauthenticated(res)
         }
     }
 }

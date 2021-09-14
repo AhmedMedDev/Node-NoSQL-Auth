@@ -1,16 +1,17 @@
 require('dotenv').config();
 
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const ResponseServiceProvider = require('../../Providers/ResponseServiceProvider');
 
-class authenticateToken
+class AuthenticateToken
 {
     static handle(req, res, next) {
 
-        const authHeader = req.headers['authorization']
-    
-        const token = authHeader && authHeader.split(' ')[1]
-    
         try {
+            const authHeader = req.headers['authorization']
+    
+            const token = authHeader && authHeader.split(' ')[1]
+
             const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
     
             req['payload'] = payload
@@ -18,12 +19,9 @@ class authenticateToken
             next()
     
         } catch (err) {
-            return res.status(401).json({
-                success: false,
-                payload: 'Unauthorized'
-            })
+            return ResponseServiceProvider.unauthenticated (res) 
         }
     }
 }
 
-module.exports = authenticateToken
+module.exports = AuthenticateToken

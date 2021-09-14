@@ -13,18 +13,18 @@ class AuthServiceProvider
     static async attempt (data)
     {
         // Make sure Email is correct 
-        let {email, password} = data
+        const {email, password} = data
 
-        let user = await User.find({email})
+        const user = await User.findOne({email})
 
-        if (!user[0]) return { auth: false }
+        if (!user) return {auth: false}
 
         // Make sure password is correct 
-        let isMatch = await bcrypt.compare(password, user[0].password);
+        const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch) return { auth: false }
+        if (!isMatch) return {auth: false}
 
-        return {auth: true, user: user[0]}
+        return {auth: true, user: user}
     }
 
     /**
@@ -45,6 +45,25 @@ class AuthServiceProvider
 
         // Create a new user
         return User.create({name, email, password, img, verify_code})
+    }
+
+    /**
+     * Inject User data in payload
+     * 
+     * @param {*} data 
+     * @returns 
+     */
+    static generatePayload (data)
+    {
+        const { isAdmin, id } = data.user
+
+        let payload = { data: { user_id: id } }
+
+        if (isAdmin) 
+            payload.data.role 
+            = process.env.ADMIN_ROLE
+
+        return payload;
     }
 }
 

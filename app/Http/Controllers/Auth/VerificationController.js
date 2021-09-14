@@ -19,30 +19,20 @@ class VerificationController
         try {
 
             // Find user by verification_code
-            let user = await User.find({
+            let user = await User.findOne({
                 verify_code : req.params.verification_code
             })
 
-            // - - - Not Found Response
-            if (!user[0]) return ResponseServiceProvider
-                                .notFoundResource(res)
+            if (!user) throw new Error("Verification code is not Correct") 
             
             // Make sure That he hasn't been verified before
-            if (user[0].email_verified_at) {
-                
-                return res.status(200).json({
-                    success : true,
-                    payload : 'Your email has already been verified before'
-                })
-            }
+            if (user.email_verified_at) 
+                    throw new Error("Your email has already been verified before")
 
             // Confirm the user's email
-            User.updateOne(
-                { _id: user[0].id},
-                { $set: {
-                    email_verified_at : new Date()
-                }}
-            )
+            await User.updateOne(
+            { _id: user.id},
+            { $set: { email_verified_at : new Date() }})
 
             return res.status(200).json({
                 success : true,
@@ -50,7 +40,7 @@ class VerificationController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider.badRequest(res, error.message)
         }
     }
 }

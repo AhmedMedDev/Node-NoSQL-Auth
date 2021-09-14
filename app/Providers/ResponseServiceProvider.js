@@ -32,6 +32,21 @@ class ResponseServiceProvider
     }
 
     /**
+     * Bad Request Error Response 
+     * 
+     * @param {*} res 
+     * @param {*} err 
+     * @returns 
+     */
+    static badRequest (res,err) 
+    {
+        return res.status(400).json({
+            success : false,
+            payload : err
+        })
+    }
+
+    /**
      * unauthorized Response 
      * 
      * @param {*} res 
@@ -40,9 +55,24 @@ class ResponseServiceProvider
      */
     static unauthorized (res) 
     {
-        return res.status(500).json({
+        return res.status(401).json({
             success : false,
             payload : "Unauthorized"
+        })
+    }
+
+    /**
+     * unauthenticated Response 
+     * 
+     * @param {*} res 
+     * @param {*} err 
+     * @returns 
+     */
+    static unauthenticated (res) 
+    {
+        return res.status(401).json({
+            success : false,
+            payload : "unauthenticated"
         })
     }
 

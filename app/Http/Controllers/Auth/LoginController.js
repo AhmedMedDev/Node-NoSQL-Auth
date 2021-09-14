@@ -17,22 +17,23 @@ class LoginController
      */
     async login (req, res) 
     {
-        // Check Credentials
-        let result = await AuthServiceProvider.attempt(req.body)
+        try {
+            // Check Credentials
+            const provider = await AuthServiceProvider.attempt(req.body)
 
-        if (!result.auth) return ResponseServiceProvider.unauthorized(res)
+            if (!provider.auth) return ResponseServiceProvider.unauthorized(res)
 
-        // Inject User data in payload
-        let payload = {
-            data: {
-                user_id : result.user.id
-            }
+            // Generate Payload 
+            const payload = AuthServiceProvider.generatePayload (provider)
+
+            // Generate Token 
+            const accessToken = jwtServiceProvider.generateAccessToken(payload)
+
+            return jwtServiceProvider.respondWithToken(accessToken, provider.user, res)
+
+        } catch (error) {
+            return ResponseServiceProvider.serverError(res, error.message)
         }
-
-        // Generate token 
-        const accessToken = jwtServiceProvider.generateAccessToken(payload)
-
-        return jwtServiceProvider.respondWithToken(accessToken,result.user,res)
     }
 }
 

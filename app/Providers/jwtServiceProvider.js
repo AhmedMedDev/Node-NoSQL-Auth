@@ -28,7 +28,12 @@ class jwtServiceProvider
             token: accessToken,
             token_type: 'bearer',
             expires_in: '30m',
-            user : userInfo
+            user : {
+                id:     userInfo._id,
+                name:   userInfo.name,
+                email:  userInfo.email,
+                img:    userInfo.img,
+            }
         })
     }
 
