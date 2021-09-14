@@ -66,7 +66,8 @@ class ResetPassController
                 success : true,
                 payload : "Proceed to the next process"
              })
-            : ResponseServiceProvider.unauthenticated(res)
+            : ResponseServiceProvider
+                .badRequest(res, "Pincode Is't Correct")
 
         } catch (error) {
             return ResponseServiceProvider.serverError(res, error)
@@ -98,7 +99,7 @@ class ResetPassController
             const password = await bcrypt.hash(req.body.newPassword, 10)
 
             // Change password  
-            await User.updateOne({ email}, {$set: { password }})
+            await User.updateOne({email}, {$set: { password }})
 
             // Inject Observer 
             ResetPassObserver.resetPassword({email})
@@ -106,7 +107,8 @@ class ResetPassController
             return res.status(200).json({success: true})
 
         } catch (error) {
-            return ResponseServiceProvider.unauthenticated(res)
+            return ResponseServiceProvider
+                .badRequest(res, "Pincode Is't Correct")
         }
     }
 }
