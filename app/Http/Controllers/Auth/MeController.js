@@ -1,3 +1,4 @@
+const User = require("../../../Models/User")
 
 class MeController
 {
@@ -8,11 +9,18 @@ class MeController
      * @param {*} res 
      * @returns Payload information
      */
-    me (req, res)
+    async me (req, res)
     {
+        const user = await User.findById(req.payload.data.user_id)
+
         return res.status(200).json({
             success : true,
-            payload: req.payload.data,
+            payload: {
+                id:     user.id,
+                name:   user.name,
+                email:  user.email,
+                avatar: user.avatar,
+            },
         })
     }
 
