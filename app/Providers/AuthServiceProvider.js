@@ -35,16 +35,16 @@ class AuthServiceProvider
      */
     static async register (data)
     {
-        let {name, email, password, img} = data
+        let {name, email, password, avatar} = data
 
         // Generate Verification Code
-        let verify_code = Math.floor(Math.random() * 999999) + 100000;
+        const verify_code = Math.floor(Math.random() * 999999) + 100000;
 
         // Hash Password
         password = await bcrypt.hash(password, 10)
 
         // Create a new user
-        return User.create({name, email, password, img, verify_code})
+        return User.create({name, email, password, avatar, verify_code})
     }
 
     /**

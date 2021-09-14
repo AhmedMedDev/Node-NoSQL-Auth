@@ -5,7 +5,7 @@ class RegisterObserver
 {
     registered (userInfo) 
     {
-        let verifyEmail =  new VerifyEmail(userInfo)
+        const verifyEmail =  new VerifyEmail(userInfo)
 
         verifyEmail.send();
     }

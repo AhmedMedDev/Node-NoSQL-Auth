@@ -18,12 +18,11 @@ class RegisterController
     {
         try {
             if (req.files)
-            req.body.img = `uploads/users/avatar/${saveFile('users/avatar', req.files.img)}`
+            req.body.avatar = `uploads/users/avatar/${saveFile('users/avatar', req.files.avatar)}`
 
-            let user = await AuthServiceProvider.register(req.body);
+            const user = await AuthServiceProvider.register(req.body);
 
             req.body.userID = user.id
-
             req.body.verify_code = user.verify_code
             
             // Inject Observer 
@@ -35,7 +34,7 @@ class RegisterController
             })
 
         } catch (error) {
-            return ResponseServiceProvider.serverError(res, error)
+            return ResponseServiceProvider.serverError(res, error.message)
         }
     }
 }

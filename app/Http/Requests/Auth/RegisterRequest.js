@@ -16,7 +16,7 @@ class RegisterRequest
             .withMessage('must be an email')
             .custom( email => isExistEmail (email) ),
             // Image roles
-            body('img')
+            body('avatar')
             .custom ((value , {req}) => optionalImage (req))
             .withMessage('must be an image with jpeg , png , gif'),
             // Password roles
